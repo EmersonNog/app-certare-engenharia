@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:certare_app/pages/home.dart';
 import 'package:certare_app/widgets/drop_down_field.dart';
 import 'package:certare_app/widgets/input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
@@ -205,8 +202,6 @@ class _FormPageState extends State<FormPage> {
   );
 
   final _codController = TextEditingController();
-  ImagePicker imagePicker = ImagePicker();
-  File? imagemSelecionada;
   // Formulario 1
   final List<String> _alugado = ['Sim', 'Não'];
   String? _selectedRented;
@@ -434,9 +429,6 @@ class _FormPageState extends State<FormPage> {
         ),
         content: Column(
           children: [
-            IconButton(onPressed: () {
-              pegarImagemCamera();
-            }, icon: Icon(Icons.photo_camera)),
             InputField(
               inputController: _codController,
               textLabel: 'Código do laudo',
@@ -1367,15 +1359,5 @@ class _FormPageState extends State<FormPage> {
         ),
       ),
     );
-  }
-
-  pegarImagemCamera() async {
-    final PickedFile? imagemTemporaria =
-        (await imagePicker.pickImage(source: ImageSource.camera)) as PickedFile?;
-    if (imagemTemporaria != null) {
-      setState(() {
-        imagemSelecionada = File(imagemTemporaria.path);
-      });
-    }
   }
 }
