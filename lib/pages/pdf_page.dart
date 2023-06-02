@@ -172,7 +172,6 @@ class _PdfPageState extends State<PdfPage> {
                     child: PdfPreview(
                       maxPageWidth: 700,
                       actions: actions,
-                      onPrinted: (_) => showPrintedToast(context),
                       onShared: (_) => showSharedToast(context),
                       build: (format) => generatePdf(
                         format,

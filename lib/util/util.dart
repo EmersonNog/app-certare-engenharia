@@ -8,7 +8,6 @@ import 'package:printing/printing.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-
 Future<Uint8List> generatePdf(
   final PdfPageFormat format,
   String cod,
@@ -106,8 +105,9 @@ Future<Uint8List> generatePdf(
 
   doc.addPage(pw.MultiPage(
       pageTheme: pageTheme,
-      header: (final context) =>
-          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+      header: (final context) => pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.center,
+        children: [
             pw.Container(
               alignment: pw.Alignment.centerLeft,
               color: PdfColor.fromHex('#649c7f'),
@@ -1385,13 +1385,15 @@ Future<Uint8List> generatePdf(
                                                   style: smallTextStyle,
                                                   children: [
                                                     pw.TextSpan(
-                                                      text: 'TETO: ',
+                                                      text:
+                                                          'TETO: ',
                                                       style: pw.TextStyle(
                                                           fontWeight: pw
                                                               .FontWeight.bold),
                                                     ),
                                                     pw.TextSpan(
-                                                      text: '$teto',
+                                                      text:
+                                                          '$teto',
                                                     ),
                                                   ],
                                                 ),
@@ -1412,8 +1414,7 @@ Future<Uint8List> generatePdf(
                                                   style: smallTextStyle,
                                                   children: [
                                                     pw.TextSpan(
-                                                      text:
-                                                          'SIST. DE CAPTAÇÃO DE ÁGUAS PLUVIAIS: ',
+                                                      text: 'SIST. DE CAPTAÇÃO DE ÁGUAS PLUVIAIS: ',
                                                       style: pw.TextStyle(
                                                           fontWeight: pw
                                                               .FontWeight.bold),
@@ -1436,13 +1437,15 @@ Future<Uint8List> generatePdf(
                                                   style: smallTextStyle,
                                                   children: [
                                                     pw.TextSpan(
-                                                      text: 'TIPOLOGIA: ',
+                                                      text:
+                                                          'TIPOLOGIA: ',
                                                       style: pw.TextStyle(
                                                           fontWeight: pw
                                                               .FontWeight.bold),
                                                     ),
                                                     pw.TextSpan(
-                                                      text: '$tipologiaTelha',
+                                                      text:
+                                                          '$tipologiaTelha',
                                                     ),
                                                   ],
                                                 ),
