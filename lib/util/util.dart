@@ -8,6 +8,41 @@ import 'package:printing/printing.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+// Função para capturar as fotos e retornar o caminho do arquivo
+Future<List<String?>> capturePhotos() async {
+  final imagePicker = ImagePicker();
+  final List<String?> photoPaths = [];
+
+  // Capturar fotos
+  for (int i = 0; i < 3; i++) {
+    final imageFile = await imagePicker.pickImage(source: ImageSource.camera);
+    if (imageFile == null) break;
+    photoPaths.add(imageFile.path);
+  }
+
+  return photoPaths;
+}
+
+// Função para adicionar uma foto ao documento PDF
+Future<void> addPhotoToPdf(pw.Document doc, String? imagePath) async {
+  if (imagePath == null) return;
+  final file = File(imagePath);
+  if (!file.existsSync()) return;
+
+  final Uint8List bytes = file.readAsBytesSync();
+  final pdfImage = pw.MemoryImage(bytes);
+  
+  doc.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Container(
+            alignment: pw.Alignment.topCenter,
+            child: pw.Image(pdfImage, height: 300));
+      },
+    ),
+  );
+}
+
 Future<Uint8List> generatePdf(
   final PdfPageFormat format,
   String cod,
@@ -82,32 +117,10 @@ Future<Uint8List> generatePdf(
   );
   const titleTextStyle = pw.TextStyle(fontSize: 10, color: PdfColors.white);
 
-  // Função para capturar uma foto e retornar o caminho do arquivo
-  Future<String?> capturePhoto() async {
-    final imagePicker = ImagePicker();
-    final imageFile = await imagePicker.pickImage(source: ImageSource.camera);
-    if (imageFile == null) return null;
-    return imageFile.path;
-  }
-
-  // Função para adicionar uma foto ao documento PDF
-  Future<void> addPhotoToPdf(String? imagePath) async {
-    if (imagePath == null) return;
-    final image = pw.MemoryImage(File(imagePath).readAsBytesSync());
-    doc.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Image(image);
-        },
-      ),
-    );
-  }
-
   doc.addPage(pw.MultiPage(
       pageTheme: pageTheme,
-      header: (final context) => pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.center,
-        children: [
+      header: (final context) =>
+          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
             pw.Container(
               alignment: pw.Alignment.centerLeft,
               color: PdfColor.fromHex('#649c7f'),
@@ -135,20 +148,20 @@ Future<Uint8List> generatePdf(
               padding: const pw.EdgeInsets.only(left: 10),
             ),
           ]),
-      // footer: (final context) => pw.Row(children: [
-      //       pw.Container(
-      //         alignment: pw.Alignment.center,
-      //         color: PdfColor.fromHex('#649c7f'),
-      //         height: 25,
-      //         width: 700,
-      //         child: pw.Text("www.certare.com",
-      //             style: pw.TextStyle(
-      //                 fontSize: 10,
-      //                 color: PdfColors.white,
-      //                 fontWeight: pw.FontWeight.bold)),
-      //         margin: const pw.EdgeInsets.fromLTRB(-100, 0, 0, -30),
-      //       )
-      //     ]),
+      footer: (final context) => pw.Row(children: [
+            pw.Container(
+              alignment: pw.Alignment.center,
+              color: PdfColor.fromHex('#649c7f'),
+              height: 25,
+              width: 700,
+              child: pw.Text("www.certare.com",
+                  style: pw.TextStyle(
+                      fontSize: 10,
+                      color: PdfColors.white,
+                      fontWeight: pw.FontWeight.bold)),
+              margin: const pw.EdgeInsets.fromLTRB(-100, 0, 0, -30),
+            )
+          ]),
       build: (final context) => [
             pw.Container(
                 padding: const pw.EdgeInsets.only(left: -5, bottom: 0),
@@ -1385,15 +1398,13 @@ Future<Uint8List> generatePdf(
                                                   style: smallTextStyle,
                                                   children: [
                                                     pw.TextSpan(
-                                                      text:
-                                                          'TETO: ',
+                                                      text: 'TETO: ',
                                                       style: pw.TextStyle(
                                                           fontWeight: pw
                                                               .FontWeight.bold),
                                                     ),
                                                     pw.TextSpan(
-                                                      text:
-                                                          '$teto',
+                                                      text: '$teto',
                                                     ),
                                                   ],
                                                 ),
@@ -1414,7 +1425,8 @@ Future<Uint8List> generatePdf(
                                                   style: smallTextStyle,
                                                   children: [
                                                     pw.TextSpan(
-                                                      text: 'SIST. DE CAPTAÇÃO DE ÁGUAS PLUVIAIS: ',
+                                                      text:
+                                                          'SIST. DE CAPTAÇÃO DE ÁGUAS PLUVIAIS: ',
                                                       style: pw.TextStyle(
                                                           fontWeight: pw
                                                               .FontWeight.bold),
@@ -1437,15 +1449,13 @@ Future<Uint8List> generatePdf(
                                                   style: smallTextStyle,
                                                   children: [
                                                     pw.TextSpan(
-                                                      text:
-                                                          'TIPOLOGIA: ',
+                                                      text: 'TIPOLOGIA: ',
                                                       style: pw.TextStyle(
                                                           fontWeight: pw
                                                               .FontWeight.bold),
                                                     ),
                                                     pw.TextSpan(
-                                                      text:
-                                                          '$tipologiaTelha',
+                                                      text: '$tipologiaTelha',
                                                     ),
                                                   ],
                                                 ),
@@ -1512,16 +1522,19 @@ Future<Uint8List> generatePdf(
                           ])
                     ]))
           ]));
-  
-  // Capturar as fotos e adicioná-las ao PDF
-  final List<String?> photoPaths = [];
-  for (int i = 0; i < 1; i++) {
-    final photoPath = await capturePhoto();
-    photoPaths.add(photoPath);
-  }
 
-  for (final photoPath in photoPaths) {
-    await addPhotoToPdf(photoPath!);
+// Capturar as duas fotos
+  final List<String?> photoPaths = await capturePhotos();
+
+// Verificar se foram capturadas duas fotos
+  if (photoPaths.length == 3) {
+    // Adicionar as fotos ao PDF
+    for (final photoPath in photoPaths) {
+      await addPhotoToPdf(doc, photoPath!);
+    }
+  } else {
+    // Tratar caso as duas fotos não tenham sido capturadas
+    // ...
   }
 
   return doc.save();
