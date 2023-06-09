@@ -64,6 +64,12 @@ class FormData {
   final String tipologiaTelha;
   final String patologiaTelha;
   final String tipoPatologiaTelha;
+  //form 8
+  final String resumo;
+  final String nomeCompleto;
+  final String cargo;
+  final String rg;
+  final String cpf;
 
   FormData({
     required this.cod,
@@ -121,6 +127,12 @@ class FormData {
     required this.tipologiaTelha,
     required this.patologiaTelha,
     required this.tipoPatologiaTelha,
+    //form 8
+    required this.resumo,
+    required this.nomeCompleto,
+    required this.cargo,
+    required this.rg,
+    required this.cpf,
   });
 }
 
@@ -199,6 +211,12 @@ class _FormPageState extends State<FormPage> {
     tipologiaTelha: '',
     patologiaTelha: '',
     tipoPatologiaTelha: '',
+    // Formulario 8
+    resumo: '',
+    nomeCompleto: '',
+    cargo: '',
+    rg: '',
+    cpf: '',
   );
 
   final _codController = TextEditingController();
@@ -266,13 +284,14 @@ class _FormPageState extends State<FormPage> {
   String? _selectedPatologyFloor;
   final List<String> _patologyTypeFloor = [
     'Infiltrações',
-    'Fissuras/trincas',
+    'Fissuras',
     'Armaduras expostas',
     'Vícios construtivos',
     'Eflorescência',
     'Bicheiras',
     'Disgregação',
-    'Desplacamento ou esfoliação',
+    'Desplacamento/Esfoliação',
+    'Não se aplica',
   ];
   List<String> _selectedTypePatologyFloor = [];
 
@@ -290,16 +309,18 @@ class _FormPageState extends State<FormPage> {
     'Pilar',
     'Viga',
     'Vigota',
-    'Laje'
+    'Laje',
+    'Não se aplica',
   ];
   final List<String> _patologySuperstructureTypes = [
     'Infiltrações',
-    'Fissuras/trincas',
+    'Fissuras',
     'Armaduras expostas',
     'Vícios construtivos',
     'Eflorescência',
     'Bicheiras',
-    'Disgregação, desplacamento ou esfoliação'
+    'Disgregação/Desplacamento/Esfoliação',
+    'Não se aplica',
   ];
   String? _selectedIdentify;
   String? _selectedConservation;
@@ -325,7 +346,8 @@ class _FormPageState extends State<FormPage> {
     'Massa Acrilica',
     'Tinta PVA',
     'Tinta acrílica',
-    'tinta EPOX'
+    'Tinta EPOX',
+    'Não se aplica',
   ];
   final List<String> _patolgyItems = ['Sim', 'Não'];
   final List<String> _typePatologyItems = [
@@ -334,7 +356,8 @@ class _FormPageState extends State<FormPage> {
     'Fissuras',
     'Deslocamento',
     'Empolamento',
-    'Deslocamento em placas'
+    'Deslocamento em placas',
+    'Não se aplica',
   ];
   final List<String> _convenientItems = [
     'Fachada',
@@ -343,7 +366,8 @@ class _FormPageState extends State<FormPage> {
     'Cozinha',
     'Banheiro',
     'Quarto',
-    'Área externa'
+    'Área externa',
+    'Não se aplica',
   ];
   String? _selectTipologyItemsEdi;
   String? _selectCoatingTypeItems;
@@ -365,6 +389,7 @@ class _FormPageState extends State<FormPage> {
     'Mancha',
     'Físsura',
     'Rachaduras',
+    'Não se aplica',
   ];
   String? _selectTipologyItemsLining;
   String? _selectFootItems;
@@ -389,7 +414,8 @@ class _FormPageState extends State<FormPage> {
     'Falta de comeeira',
     'Abaulamentos',
     'Madeira deteriorada',
-    'Falta de apaios'
+    'Falta de apaios',
+    'Não se aplica',
   ];
   String? _selectedSlab;
   String? _selectedRoof;
@@ -398,6 +424,13 @@ class _FormPageState extends State<FormPage> {
   String? _selectedPatologyTiles;
   List<String> _selectedPatologyRoof = [];
 
+  // Formulario 8
+  final _resumo = TextEditingController();
+  final _nomeCompleto = TextEditingController();
+  final _cargo = TextEditingController();
+  final _rg = TextEditingController();
+  final _cpf = TextEditingController();
+
   // Formaters
   final _cpfFormatter = MaskTextInputFormatter(
     mask: '###.###.###-##',
@@ -405,7 +438,7 @@ class _FormPageState extends State<FormPage> {
   );
 
   final _contatoFormatter = MaskTextInputFormatter(
-    mask: '## #.#####-####',
+    mask: '## #.####-####',
     filter: {'#': RegExp(r'[0-9]')},
   );
 
@@ -1151,6 +1184,69 @@ class _FormPageState extends State<FormPage> {
         isActive: _currentStep >= 6,
         state: _currentStep >= 6 ? StepState.complete : StepState.disabled,
       ),
+      Step(
+        title: const Text(
+          'ASSINATURA',
+          style: TextStyle(
+            fontFamily: 'Prototype',
+            fontSize: 18,
+          ),
+        ),
+        content: Column(children: [
+          TextField(
+            controller: _resumo,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            decoration: InputDecoration(
+              labelText: 'Insira um resumo do laudo',
+              suffixIcon: const Icon(Icons.pending),
+              filled: true,
+              fillColor: Colors.grey.withOpacity(0.1),
+              errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red)),
+              errorStyle: const TextStyle(height: 0),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.blue),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          InputField(
+            inputController: _nomeCompleto,
+            textLabel: 'Nome completo',
+            suffixWidget: const Icon(Icons.info),
+            isRequired: true,
+          ),
+          const SizedBox(height: 10),
+          InputField(
+            inputController: _cargo,
+            textLabel: 'Cargo atual',
+            suffixWidget: const Icon(Icons.workspace_premium_rounded),
+            isRequired: true,
+          ),
+          const SizedBox(height: 10),
+          InputField(
+            inputController: _rg,
+            textLabel: 'Nº do RG',
+            suffixWidget: const Icon(Icons.perm_identity),
+            isRequired: true,
+          ),
+          const SizedBox(height: 10),
+          InputField(
+            inputController: _cpf,
+            textLabel: 'Nº CPF/MF',
+            suffixWidget: const Icon(Icons.numbers),
+            isRequired: true,
+          ),
+        ]),
+        isActive: _currentStep >= 7,
+        state: _currentStep >= 7 ? StepState.complete : StepState.disabled,
+      )
     ];
   }
 
@@ -1344,10 +1440,23 @@ class _FormPageState extends State<FormPage> {
                                 patologiaTelha: _selectedPatologyTiles ?? '',
                                 tipoPatologiaTelha:
                                     _selectedPatologyRoof.join(', '),
+                                //form 8
+                                resumo: _resumo.text,
+                                nomeCompleto: _nomeCompleto.text,
+                                cargo: _cargo.text,
+                                rg: _rg.text,
+                                cpf: _cpf.text,
                               );
                               widget.onFormSubmitted(formData);
                             },
-                            child: const Text('Generate PDF'),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Gerar PDF'),
+                                const SizedBox(width: 10),
+                                Icon(Icons.picture_as_pdf), // Adiciona o ícone
+                              ],
+                            ),
                           ),
                         ),
                     ],

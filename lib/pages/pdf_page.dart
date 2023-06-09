@@ -1,3 +1,4 @@
+import 'package:certare_app/pages/home.dart';
 import 'package:certare_app/util/util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,12 @@ class _PdfPageState extends State<PdfPage> {
   String tipologiaTelha = '';
   String patologiaTelha = '';
   String tipoPatologiaTelha = '';
+  //form 8
+  String resumo = '';
+  String nomeCompleto = '';
+  String cargo = '';
+  String rg = '';
+  String cpf = '';
 
   @override
   void initState() {
@@ -134,12 +141,18 @@ class _PdfPageState extends State<PdfPage> {
       patologiaForro = formData.patologiaForro;
       tipoPatologiaForro = formData.tipoPatologiaForro;
       //form 7
-      laje = formData.laje; 
-      teto = formData.teto; 
+      laje = formData.laje;
+      teto = formData.teto;
       coleta = formData.coleta;
-      tipologiaTelha = formData.tipologiaTelha; 
+      tipologiaTelha = formData.tipologiaTelha;
       patologiaTelha = formData.patologiaTelha;
       tipoPatologiaTelha = formData.tipoPatologiaTelha;
+      //form 8
+      resumo = formData.resumo;
+      nomeCompleto = formData.nomeCompleto;
+      cargo = formData.cargo;
+      rg = formData.rg;
+      cpf = formData.cpf;
     });
   }
 
@@ -160,6 +173,16 @@ class _PdfPageState extends State<PdfPage> {
             style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+          onPressed: () {
+            resetPhotoPaths();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
+          },
+        ),
       ),
       body: cod.isEmpty
           ? FormPage(onFormSubmitted: _handleFormSubmitted)
@@ -169,67 +192,87 @@ class _PdfPageState extends State<PdfPage> {
                 children: [
                   const SizedBox(height: 16.0),
                   Expanded(
-                    child: PdfPreview(
-                      maxPageWidth: 700,
-                      actions: actions,
-                      onShared: (_) => showSharedToast(context),
-                      build: (format) => generatePdf(
-                        format,
-                        cod,
-                        //form 1
-                        nameEntrevistado,
-                        cpfEntrevistado,
-                        nameProprietario,
-                        cpfProprietario,
-                        contato,
-                        endereco,
-                        cidade,
-                        bairro,
-                        moradores,
-                        situacao,
-                        construcao,
-                        ocupacao,
-                        //form 2
-                        tipoImovel,
-                        pavimento,
-                        muro,
-                        padraoConstrutivo,
-                        idadeAparente,
-                        aberto,
-                        qtdQuarto,
-                        qtdBanheiro,
-                        qtdSuite,
-                        garagem,
-                        situacaoArea,
-                        //form 3
-                        tipologiaPiso,
-                        patologiaPiso,
-                        tipoPatologiaPiso,
-                        //form 4
-                        posivelIdentificar,
-                        conservacao,
-                        patologiaSuperestrutura,
-                        elemento,
-                        tipoPatologiaSuperestrutura,
-                        //form 5
-                        itensTipologiaEdi,
-                        revestimento,
-                        itensRevestimento,
-                        patologiaEdi,
-                        tipoPatologiaEdi,
-                        comodo,
-                        //form 6
-                        tipologiaForro,
-                        peSolto,
-                        patologiaForro,
-                        tipoPatologiaForro,
-                        //form 7
-                        laje,
-                        teto,
-                        coleta,
-                        tipologiaTelha,
-                        patologiaTelha,
-                        tipoPatologiaTelha,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.2), 
+                            spreadRadius: 5.0, 
+                            blurRadius: 4.0, 
+                            offset: Offset(0,
+                                2),
+                          ),
+                        ],
+                      ),
+                      child: PdfPreview(
+                        maxPageWidth: 700,
+                        actions: actions,
+                        onShared: (_) => showSharedToast(context),
+                        build: (format) => generatePdf(
+                          format,
+                          cod,
+                          //form 1
+                          nameEntrevistado,
+                          cpfEntrevistado,
+                          nameProprietario,
+                          cpfProprietario,
+                          contato,
+                          endereco,
+                          cidade,
+                          bairro,
+                          moradores,
+                          situacao,
+                          construcao,
+                          ocupacao,
+                          //form 2
+                          tipoImovel,
+                          pavimento,
+                          muro,
+                          padraoConstrutivo,
+                          idadeAparente,
+                          aberto,
+                          qtdQuarto,
+                          qtdBanheiro,
+                          qtdSuite,
+                          garagem,
+                          situacaoArea,
+                          //form 3
+                          tipologiaPiso,
+                          patologiaPiso,
+                          tipoPatologiaPiso,
+                          //form 4
+                          posivelIdentificar,
+                          conservacao,
+                          patologiaSuperestrutura,
+                          elemento,
+                          tipoPatologiaSuperestrutura,
+                          //form 5
+                          itensTipologiaEdi,
+                          revestimento,
+                          itensRevestimento,
+                          patologiaEdi,
+                          tipoPatologiaEdi,
+                          comodo,
+                          //form 6
+                          tipologiaForro,
+                          peSolto,
+                          patologiaForro,
+                          tipoPatologiaForro,
+                          //form 7
+                          laje,
+                          teto,
+                          coleta,
+                          tipologiaTelha,
+                          patologiaTelha,
+                          tipoPatologiaTelha,
+                          //form 8
+                          resumo,
+                          nomeCompleto,
+                          cargo,
+                          rg,
+                          cpf,
+                        ),
                       ),
                     ),
                   ),

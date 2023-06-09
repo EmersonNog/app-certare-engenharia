@@ -8,5 +8,5 @@ class Routes {
     '/pdf': (context) => const PdfPage(),
   };
 
-  static String initialRoute = '/pdf';
+  static String initialRoute = '/home';
 }

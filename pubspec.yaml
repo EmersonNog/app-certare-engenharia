@@ -30,6 +30,7 @@ flutter:
   uses-material-design: true
   assets:
    - assets/images/certare.png
+   - assets/images/footer.png
    
   fonts:
     - family: Prototype
