@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
-
 import '../../widgets/multi_select_field.dart';
 
 class FormData {
@@ -149,10 +148,6 @@ class _FormPageState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
   int _currentStep = 0;
   late List<Step> _formSteps;
-  List<IconData> stepIcons = [
-    Icons.check_circle, // Ícone para passo concluído
-    Icons.edit, // Ícone para passo em andamento
-  ];
 
   // Formulario 1
   FormData _formData = FormData(
@@ -460,110 +455,113 @@ class _FormPageState extends State<FormPage> {
             fontSize: 18,
           ),
         ),
-        content: Column(
-          children: [
-            InputField(
-              inputController: _codController,
-              textLabel: 'Código do laudo',
-              suffixWidget: const Icon(Icons.info),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _nameController,
-              textLabel: 'Nome do entrevistado',
-              suffixWidget: const Icon(Icons.person),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _cpfEntrevistadoController,
-              textLabel: 'CPF do entrevistado',
-              suffixWidget: const Icon(Icons.assignment_ind),
-              formatter: _cpfFormatter,
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _proprietarioController,
-              textLabel: 'Nome do proprietário',
-              suffixWidget: const Icon(Icons.person_outline),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _proprietarioCpfController,
-              textLabel: 'CPF do proprietário',
-              suffixWidget: const Icon(Icons.assignment_ind_outlined),
-              formatter: _cpfFormatter,
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _contatoController,
-              textLabel: 'Contato',
-              suffixWidget: const Icon(Icons.location_on),
-              isRequired: true,
-              formatter: _contatoFormatter,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _enderecoController,
-              textLabel: 'Endereço',
-              suffixWidget: const Icon(Icons.location_on),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _cidadeController,
-              textLabel: 'Cidade',
-              suffixWidget: const Icon(Icons.location_city),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _bairroController,
-              textLabel: 'Bairro',
-              suffixWidget: const Icon(Icons.location_city),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _moradoresController,
-              textLabel: 'Quantidade de Moradores',
-              suffixWidget: const Icon(Icons.format_list_numbered),
-              formatter: _quantidadeFormatter,
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            DropDownField(
-              labelText: 'Alugado',
-              items: _alugado,
-              value: _selectedRented,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedRented = newValue;
-                });
-              },
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _construcaoController,
-              textLabel: 'Tempo de Construção',
-              suffixWidget: const Icon(Icons.construction),
-              isRequired: true,
-            ),
-            const SizedBox(height: 10),
-            InputField(
-              inputController: _ocupacaoController,
-              textLabel: 'Tempo de Ocupação',
-              suffixWidget: const Icon(Icons.date_range_sharp),
-              isRequired: true,
-            ),
-          ],
+        content: Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Column(
+            children: [
+              InputField(
+                inputController: _codController,
+                textLabel: 'Código do laudo',
+                suffixWidget: const Icon(Icons.info),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _nameController,
+                textLabel: 'Nome do entrevistado',
+                suffixWidget: const Icon(Icons.person),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _cpfEntrevistadoController,
+                textLabel: 'CPF do entrevistado',
+                suffixWidget: const Icon(Icons.assignment_ind),
+                formatter: _cpfFormatter,
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _proprietarioController,
+                textLabel: 'Nome do proprietário',
+                suffixWidget: const Icon(Icons.person_outline),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _proprietarioCpfController,
+                textLabel: 'CPF do proprietário',
+                suffixWidget: const Icon(Icons.assignment_ind_outlined),
+                formatter: _cpfFormatter,
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _contatoController,
+                textLabel: 'Contato',
+                suffixWidget: const Icon(Icons.phone),
+                isRequired: true,
+                formatter: _contatoFormatter,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _enderecoController,
+                textLabel: 'Endereço',
+                suffixWidget: const Icon(Icons.location_on),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _cidadeController,
+                textLabel: 'Cidade',
+                suffixWidget: const Icon(Icons.location_city),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _bairroController,
+                textLabel: 'Bairro',
+                suffixWidget: const Icon(Icons.holiday_village),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _moradoresController,
+                textLabel: 'Quantidade de Moradores',
+                suffixWidget: const Icon(Icons.format_list_numbered),
+                formatter: _quantidadeFormatter,
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              DropDownField(
+                labelText: 'Alugado',
+                items: _alugado,
+                value: _selectedRented,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedRented = newValue;
+                  });
+                },
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _construcaoController,
+                textLabel: 'Tempo de Construção',
+                suffixWidget: const Icon(Icons.construction),
+                isRequired: true,
+              ),
+              const SizedBox(height: 10),
+              InputField(
+                inputController: _ocupacaoController,
+                textLabel: 'Tempo de Ocupação',
+                suffixWidget: const Icon(Icons.date_range_sharp),
+                isRequired: true,
+              ),
+            ],
+          ),
         ),
         isActive: _currentStep >= 0,
-        state: _currentStep >= 0 ? StepState.complete : StepState.disabled,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -706,8 +704,8 @@ class _FormPageState extends State<FormPage> {
             )
           ],
         ),
-        isActive: _currentStep >= 1,
-        state: _currentStep >= 1 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -780,8 +778,8 @@ class _FormPageState extends State<FormPage> {
             ),
           ],
         ),
-        isActive: _currentStep >= 2,
-        state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -882,8 +880,8 @@ class _FormPageState extends State<FormPage> {
             ),
           ],
         ),
-        isActive: _currentStep >= 3,
-        state: _currentStep >= 3 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -1006,8 +1004,8 @@ class _FormPageState extends State<FormPage> {
             ),
           ],
         ),
-        isActive: _currentStep >= 4,
-        state: _currentStep >= 4 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -1083,8 +1081,8 @@ class _FormPageState extends State<FormPage> {
             },
           ),
         ]),
-        isActive: _currentStep >= 5,
-        state: _currentStep >= 5 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -1181,8 +1179,8 @@ class _FormPageState extends State<FormPage> {
             },
           ),
         ]),
-        isActive: _currentStep >= 6,
-        state: _currentStep >= 6 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       ),
       Step(
         title: const Text(
@@ -1244,24 +1242,21 @@ class _FormPageState extends State<FormPage> {
             isRequired: true,
           ),
         ]),
-        isActive: _currentStep >= 7,
-        state: _currentStep >= 7 ? StepState.complete : StepState.disabled,
+        isActive: _currentStep >= 0,
+        state: StepState.indexed,
       )
     ];
   }
 
-  void _nextStep() {
+  _nextStep() {
     if (_currentStep < _formSteps.length - 1) {
       setState(() {
         _currentStep++;
       });
-    } else {
-      // Lógica para o último passo (opcional)
-      // Por exemplo, exibir uma mensagem de conclusão ou realizar alguma ação adicional.
     }
   }
 
-  void _previousStep() {
+  _previousStep() {
     if (_currentStep > 0) {
       setState(() {
         _currentStep--;
@@ -1271,14 +1266,10 @@ class _FormPageState extends State<FormPage> {
     }
   }
 
-  StepState _getStepState(int index) {
-    if (index == _currentStep) {
-      return StepState.editing;
-    } else if (index < _currentStep) {
-      return StepState.complete;
-    } else {
-      return StepState.indexed;
-    }
+  void _stepTapped(int step) {
+    setState(() {
+      _currentStep = step;
+    });
   }
 
   @override
@@ -1295,71 +1286,73 @@ class _FormPageState extends State<FormPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Stepper(
-                        physics: const ScrollPhysics(),
-                        currentStep: _currentStep,
-                        onStepContinue: _nextStep,
-                        onStepCancel: _previousStep,
-                        steps: _formSteps,
-                        // onStepTapped: ,
-                        controlsBuilder:
-                            (BuildContext context, ControlsDetails details) {
-                          return Row(
-                            children: <Widget>[
-                              if (_currentStep ==
-                                  0) // Botão "Voltar" no primeiro passo
-                                TextButton(
-                                  onPressed: () => Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Home()),
-                                  ),
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                      const Color.fromARGB(255, 173, 80, 85),
+                      SingleChildScrollView(
+                        child: Stepper(
+                          physics: const ScrollPhysics(),
+                          currentStep: _currentStep,
+                          onStepContinue: _nextStep,
+                          onStepCancel: _previousStep,
+                          onStepTapped: _stepTapped,
+                          steps: _formSteps,
+                          controlsBuilder:
+                              (BuildContext context, ControlsDetails details) {
+                            return Row(
+                              children: <Widget>[
+                                if (_currentStep ==
+                                    0) // Botão "Voltar" no primeiro passo
+                                  TextButton(
+                                    onPressed: () => Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const Home()),
+                                    ),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        const Color.fromARGB(255, 173, 80, 85),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Voltar',
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Voltar',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              if (_currentStep >
-                                  0) // Botão "Voltar" nos outros passos
-                                TextButton(
-                                  onPressed: details.onStepCancel,
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                      const Color.fromARGB(255, 173, 80, 85),
+                                if (_currentStep >
+                                    0) // Botão "Voltar" nos outros passos
+                                  TextButton(
+                                    onPressed: details.onStepCancel,
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        const Color.fromARGB(255, 173, 80, 85),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Voltar',
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Voltar',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              const SizedBox(width: 10),
-                              if (_currentStep <
-                                  _formSteps.length -
-                                      1) // Botão "Próximo" nos passos anteriores ao último
-                                TextButton(
-                                  onPressed: details.onStepContinue,
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                      const Color.fromARGB(255, 12, 112, 60),
+                                const SizedBox(width: 10),
+                                if (_currentStep <
+                                    _formSteps.length -
+                                        1) // Botão "Próximo" nos passos anteriores ao último
+                                  TextButton(
+                                    onPressed: details.onStepContinue,
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                        const Color.fromARGB(255, 12, 112, 60),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Próximo',
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Próximo',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                            ],
-                          );
-                        },
+                              ],
+                            );
+                          },
+                        ),
                       ),
                       if (_currentStep ==
                           _formSteps.length -
@@ -1447,7 +1440,40 @@ class _FormPageState extends State<FormPage> {
                                 rg: _rg.text,
                                 cpf: _cpf.text,
                               );
-                              widget.onFormSubmitted(formData);
+                              if (formData.cod.isEmpty) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Row(
+                                        children: [
+                                          Icon(Icons.warning_amber_rounded,
+                                              color: Colors.amber),
+                                          const SizedBox(width: 8),
+                                          Text('Aviso',
+                                              style: TextStyle(
+                                                  fontFamily: 'Prototype')),
+                                        ],
+                                      ),
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                          24, 20, 24, 0),
+                                      content: Text(
+                                        'Por favor, preencha o código do laudo antes de gerar o PDF.',
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                widget.onFormSubmitted(formData);
+                              }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

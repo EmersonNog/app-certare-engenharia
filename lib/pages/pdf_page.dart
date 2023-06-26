@@ -196,12 +196,10 @@ class _PdfPageState extends State<PdfPage> {
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color:
-                                Colors.black.withOpacity(0.2), 
-                            spreadRadius: 5.0, 
-                            blurRadius: 4.0, 
-                            offset: Offset(0,
-                                2),
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 5.0,
+                            blurRadius: 4.0,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
@@ -209,6 +207,7 @@ class _PdfPageState extends State<PdfPage> {
                         maxPageWidth: 700,
                         actions: actions,
                         onShared: (_) => showSharedToast(context),
+                        onPrinted: (_) => showPrintedToast(context),
                         build: (format) => generatePdf(
                           format,
                           cod,

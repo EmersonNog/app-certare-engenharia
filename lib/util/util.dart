@@ -8,6 +8,7 @@ import 'package:printing/printing.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart' show PdfImage;
+import 'package:path/path.dart' as path;
 
 final List<String?> photoPaths = [];
 
@@ -15,7 +16,7 @@ void resetPhotoPaths() {
   photoPaths.clear();
 }
 
-// Função para capturar as fotos e retornar o caminho do arquivo
+// Função para capturar as fotos e retornar o caminho dos arquivos
 Future<void> capturePhotos(int desiredCount) async {
   final imagePicker = ImagePicker();
 
@@ -24,12 +25,20 @@ Future<void> capturePhotos(int desiredCount) async {
   if (remainingCount <= 0) return;
 
   // Capturar fotos restantes
-  for (int i = 0; i < remainingCount; i++) {
-    final imageFile = await imagePicker.pickImage(source: ImageSource.camera);
-    if (imageFile == null) break;
+  final List<XFile>? imageFiles = await imagePicker.pickMultiImage(
+    imageQuality: 70, // Set the image quality (0-100)
+    maxWidth: 800, // Set the maximum width of the images
+    maxHeight: 800, // Set the maximum height of the images
+  );
+
+  if (imageFiles == null || imageFiles.isEmpty) return;
+
+  // Adicionar caminhos das fotos selecionadas
+  for (final imageFile in imageFiles) {
     photoPaths.add(imageFile.path);
   }
 }
+
 
 // Função para adicionar uma foto ao documento PDF
 Future<void> addPhotoToPdf(pw.Document doc, String? imagePath) async {
@@ -1440,8 +1449,8 @@ Future<Uint8List> generatePdf(
             ])
           ]));
 
-// Capturar as duas fotos
-  await capturePhotos(55);
+// Selecionar as fotos
+  await capturePhotos(2);
 
 // Adicionar as fotos ao PDF
   for (final photoPath in photoPaths) {
@@ -1467,12 +1476,16 @@ Future<void> saveAsFile(
 ) async {
   final bytes = await build(pageFormat);
 
-  final appDocDir = await getApplicationDocumentsDirectory();
-  final appDocPath = appDocDir.path;
-  final file = File('$appDocPath/LCV.pdf');
-  print('Save as file ${file.path}');
+  final appDocDir = await getExternalStorageDirectory();
+  final appDocPath = appDocDir!.path;
+  final filePath = path.join(appDocPath, 'document.pdf');
+  final file = File(filePath);
   await file.writeAsBytes(bytes);
-  await OpenFile.open(file.path);
+  
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Documento salvo em: $filePath')));
+  
+  OpenFile.open(filePath);
 }
 
 void showPrintedToast(final BuildContext context) {
